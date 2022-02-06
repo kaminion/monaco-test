@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import NotebookApp from '@nteract/notebook-app-component';
 
 const App = () => (
-    <div>
-        test
-    </div>
+    <Fragment>
+        <NotebookApp contentRef='12'></NotebookApp>
+    </Fragment>
 )
 
 export default App;

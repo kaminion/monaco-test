@@ -3,14 +3,23 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = 
 {
-    entry: "./index.tsx",
+    entry: "./src/index.tsx",
+    mode: "development",
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename:'bundle.js'
+        filename: 'bundles.js',
+        chunkFilename: 'bundles.chunk.js'
     },
+    // optimization: {
+    //     runtimeChunk: 'single',
+    //     splitChunks: {
+    //         chunks: 'all'
+    //     }
+    // },
     module: {
         rules: [
             {
@@ -18,18 +27,24 @@ module.exports =
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'sass-loader'
+                    'sass-loader',
+                    'postcss-loader'
                 ]
             },
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
+                test: /\.(ts|tsx|js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        plugins:["@babel/plugin-syntax-dynamic-import"]
+                    }
+                }
             },
             {
-                test: /\.(ts|tsx)$/,
+                test: /\.(ts|tsx|js|jsx)$/,
                 exclude: /node_modules/,
-                use: 'babel-loader'
+                use: 'ts-loader',
             },
             {
                 test: /\.html$/,
@@ -42,11 +57,27 @@ module.exports =
                         }
                     }
                 ]
+            },
+            {
+                test: /(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: 'file-loader'
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/,
+                use: 'file-loader'
             }
       ]  
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+        extensions: ['.tsx', '.ts', '.js'],
+        fallback: {
+            "crypto": require.resolve('crypto-browserify'),
+            "path": require.resolve("path-browserify"),
+            "buffer": require.resolve("buffer/"),
+            "querystring": require.resolve("querystring-es3"),
+            "stream": require.resolve("stream-browserify"),
+            "os": require.resolve("os-browserify/browser")
+        }
     },
     plugins: [
         new MiniCssExtractPlugin({
@@ -57,8 +88,16 @@ module.exports =
         }),
         new webpack.ProvidePlugin({
             process: 'process/browser'
-        })
+        }),
+        new MonacoWebpackPlugin()
     ],
-    mode: 'none',
-    target:'web'
+    target: 'web',
+    devServer: {
+        devMiddleware: { publicPath: '/dist' },
+        static: { directory: path.resolve(__dirname, './dist') },
+        hot: true,
+        host: 'localhost',
+        port: '10600',
+        open: true
+    }
 }
