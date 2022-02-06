@@ -1,10 +1,13 @@
-import React, { Fragment } from 'react';
-import NotebookApp from '@nteract/notebook-app-component';
+import React, { Fragment, Suspense } from "react";
+
+const NotebookApp = React.lazy(() => import("@nteract/notebook-app-component"));
 
 const App = () => (
     <Fragment>
-        <NotebookApp contentRef='12'></NotebookApp>
+        <Suspense fallback={<div>Loading ...</div>}>
+            <NotebookApp contentRef="12" />
+        </Suspense>
     </Fragment>
-)
+);
 
 export default App;

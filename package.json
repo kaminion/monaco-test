@@ -44,6 +44,7 @@
     "@nteract/commutable": "^7.4.6",
     "@nteract/editor": "^10.1.12",
     "@nteract/notebook-app-component": "^7.7.11",
+    "@nteract/stateful-components": "^1.7.14",
     "babel": "^6.23.0",
     "babel-runtime": "^6.26.0",
     "buffer": "^6.0.3",
@@ -55,6 +56,8 @@
     "querystring-es3": "^0.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
     "stream-browserify": "^3.0.0"
   }
 }
