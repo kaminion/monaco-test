@@ -1,20 +1,24 @@
-import { applyMiddleware, createStore } from "redux";
-import loggerMiddleware from "./middleware";
+import { AppState, reducers, epics as coreEpics } from "@nteract/core";
+import { notifications } from "@nteract/mythic-notifications";
+import { makeConfigureStore } from "@nteract/myths";
+import { compose } from "redux";
+import { contents } from "rx-jupyter";
+import initialState from "./state";
 
-const ADD = "ADD";
-const DELETE = "DELETE";
+const composeEnhancers = 
+    typeof window !== "undefined"
+        ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+        : compose
 
-const reducer = (state = [], action) => {
-    switch (action.type) {
-        case ADD :
-            return [{text : action.text, id:Date.now()}, ...state];
-        case DELETE:
-            return state.filter(toDo=> toDo.id !== action.id);
-        default:
-            return state;
-    }
-}
+export const configureStore = makeConfigureStore<AppState>()({
+    packages: [notifications],
+    reducers: {
+        app: reducers.app,
+        core: reducers.core as any
+    },
+    epics: [...coreEpics.allEpics, coreEpics.launchKernelWhenNotebookSetEpic] as any,
+    epicDependencies: { contentProvider: contents.JupyterContentProvider },
+    enhancer: composeEnhancers
+});
 
-const store = createStore(reducer, applyMiddleware(loggerMiddleware));
-
-export default store;
+export default ()=>configureStore(initialState);

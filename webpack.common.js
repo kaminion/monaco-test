@@ -9,7 +9,7 @@ const LoadashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const configurator = require('@nteract/webpack-configurator');
 
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: "./index.tsx",
     mode: "development",
     output: {
         path: path.resolve(__dirname, "dist"),

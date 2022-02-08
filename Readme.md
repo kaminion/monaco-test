@@ -14,6 +14,7 @@
 - 모든 node_modules 폴더 검사하는 이슈
 - Change exclude: /node_modules/ to exclude: path.resolve(\_\_dirname, '/node_modules')
 - (해결링크)[http://blog.timwheeler.io/webpack-and/]
+- export, export default 한 파일에 같이 쓰면 발생하는 문제 commonjs로 바꿔도 안돼서 head script에 var exports = {};로 수정
 
 # 이외 이슈
 
