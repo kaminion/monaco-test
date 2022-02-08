@@ -4,21 +4,30 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const LoadashModuleReplacementPlugin = require("lodash-webpack-plugin");
+
+const configurator = require('@nteract/webpack-configurator');
 
 module.exports = {
     entry: "./src/index.tsx",
     mode: "development",
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundles.[chunkhash].js",
-        chunkFilename: "chunkbundle.[chunkhash].js",
+        filename: "bundles.[name].[chunkhash].js",
+        chunkFilename: "chunks.[name].js",
     },
-    optimization: {
-        // runtimeChunk: 'single',
-        splitChunks: {
-            chunks: "all",
-        },
-    },
+    // optimization: {
+    //     splitChunks: {
+    //         cacheGroups: {
+    //             node_vendors: {
+    //                 test: /[\\/]node_modules[\\/]/,
+    //                 chunks: "all",
+    //                 priority: 1,
+    //                 reuseExistingChunk: true
+    //             }
+    //         }
+    //     },
+    // },
     module: {
         rules: [
             {
@@ -33,9 +42,19 @@ module.exports = {
                 },
             },
             {
-                test: /\.(ts|tsx|js|jsx)$/,
-                exclude: /node_modules/,
-                use: "ts-loader",
+                test: /\.tsx?$/,
+                exclude: path.resolve(__dirname, '/node_modules/'),
+                use: [
+                    {                    
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                                compilerOptions: {
+                                    noEmit: false,
+                                },
+                        }
+                    }
+                ]
             },
             {
                 test: /\.html$/,
@@ -59,7 +78,13 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"],
+        alias: {
+            ...configurator.mergeDefaultAliases(),
+            react: path.resolve('./node_modules/react'),
+            "react-dom": path.resolve('./node_modules/react-dom'),
+
+        },
+        extensions: [".tsx", ".ts", ".js", ".jsx"],
         fallback: {
             crypto: require.resolve("crypto-browserify"),
             path: require.resolve("path-browserify"),
@@ -80,6 +105,8 @@ module.exports = {
             process: "process/browser",
         }),
         new MonacoWebpackPlugin(),
+        new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
+        new LoadashModuleReplacementPlugin()
     ],
     target: "web",
     devServer: {
