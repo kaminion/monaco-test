@@ -8,7 +8,7 @@ const kernelspecsRef = createKernelspecsRef();
 
 export const initialState = Record<AppState>({
     app: makeAppRecord({
-        version: "kaminion/nteract/react"
+        version: "@nteract/web"
     }),
     core: makeStateRecord({
         currentKernelspecsRef: kernelspecsRef,
