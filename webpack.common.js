@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 const LoadashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const configurator = require('@nteract/webpack-configurator');
 
@@ -82,6 +83,8 @@ module.exports = {
             ...configurator.mergeDefaultAliases(),
             react: path.resolve('./node_modules/react'),
             "react-dom": path.resolve('./node_modules/react-dom'),
+            redux: path.resolve('./node_modules/redux'),
+            "react-redux": path.resolve('./node_modules/react-redux')
 
         },
         extensions: [".tsx", ".ts", ".js", ".jsx"],
@@ -92,6 +95,7 @@ module.exports = {
             querystring: require.resolve("querystring-es3"),
             stream: require.resolve("stream-browserify"),
             os: require.resolve("os-browserify/browser"),
+            fs: false
         },
     },
     plugins: [
@@ -104,14 +108,14 @@ module.exports = {
         new webpack.ProvidePlugin({
             process: "process/browser",
         }),
-        new MonacoWebpackPlugin(),
+        // new MonacoWebpackPlugin(),
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
-        new LoadashModuleReplacementPlugin()
+        new LoadashModuleReplacementPlugin(),
+        new ReactRefreshPlugin()
     ],
     target: "web",
     devServer: {
-        devMiddleware: { publicPath: "/dist" },
-        static: { directory: path.resolve(__dirname, "./dist") },
+        static: { directory: path.resolve(__dirname, "./dist"), publicPath: path.resolve(__dirname, "dist") },
         hot: true,
         host: "localhost",
         port: "10600",

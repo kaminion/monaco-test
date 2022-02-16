@@ -1,17 +1,15 @@
 import React, { Fragment } from "react";
 
 import NotebookApp from "@nteract/notebook-app-component";
-// import MonacoEditor from "@nteract/monaco-editor";
 import { createContentRef } from "@nteract/core";
+import { connect } from "react-redux";
+import { contentRef } from "./modules/vanila";
 
-const contentRef = createContentRef()
 
-
-
-const App = () => (
-    <Fragment>
+export const App = () => (
+    <>
         <NotebookApp contentRef={contentRef}/>
-    </Fragment>
+    </>
 );
 
-export default App;
+export default connect()(App);

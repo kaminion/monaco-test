@@ -1,5 +1,5 @@
 import * as Immutable from "immutable";
-import { makeEntitiesRecord, makeContentsRecord, makeStateRecord, ContentRecord } from "@nteract/core";
+import { makeEntitiesRecord, makeContentsRecord, makeStateRecord, ContentRecord, actions } from "@nteract/core";
 import { createContentRef, createKernelspecsRef, makeNotebookContentRecord } from "@nteract/core";
 import { AnyAction } from "redux";
 
@@ -28,6 +28,10 @@ export const initialState = {
 export const reducer = (state: any, action: AnyAction) => {
   const newState = { ...state };
   switch (action.type) {
+    case actions.FETCH_KERNELSPECS: {
+      console.log(action.payload, "A")
+      return newState;
+    }
     case "CREATE": {
       // we create a new object
       newState[action.payload.id] = action.payload;

@@ -6,7 +6,6 @@
   "scripts": {
     "clean": "rimraf lib dist",
     "prebuild": "npm run clean",
-    "prestart": "webpack --config webpack.common.js",
     "start": "webpack serve --config webpack.common.js",
     "build": "webpack --config webpack.common.js"
   },
@@ -21,6 +20,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@nteract/webpack-configurator": "^3.2.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@types/node": "^13.7.1",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
@@ -47,14 +47,15 @@
     "@babel/runtime": "^7.17.0",
     "@babel/runtime-corejs3": "^7.17.0",
     "@nteract/commutable": "^7.4.6",
-    "@nteract/core": "^15.0.0",
-    "@nteract/editor": "^10.1.0",
+    "@nteract/core": "^10.5.0",
+    "@nteract/editor": "^10.1.12",
+    "@nteract/monaco-editor": "^3.5.3",
     "@nteract/mythic-configuration": "^1.0.11",
     "@nteract/mythic-notifications": "^0.2.11",
     "@nteract/myths": "^0.2.13",
-    "@nteract/notebook-app-component": "^7.6.0",
+    "@nteract/notebook-app-component": "^5.1.0",
     "@nteract/outputs": "^3.0.9",
-    "@nteract/stateful-components": "^1.4.1",
+    "@nteract/stateful-components": "^1.7.14",
     "@nteract/styles": "^2.2.0",
     "@types/react-redux": "^7.1.22",
     "babel": "^6.23.0",
@@ -73,6 +74,7 @@
     "redux-observable": "^2.0.0",
     "rx-jupyter": "^5.5.10",
     "rxjs": "^6.6.0",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "styled-components": "^5.3.3"
   }
 }
