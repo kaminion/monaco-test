@@ -1,4 +1,4 @@
-import { AppState, ContentRecord, createKernelspecsRef, HostRecord, makeAppRecord, makeContentsRecord, makeEntitiesRecord, makeHostsRecord, makeStateRecord, makeTransformsRecord } from "@nteract/core";
+import { AppState, ContentRecord, createKernelspecsRef, HostRecord, makeAppRecord, makeContentsRecord, makeEntitiesRecord, makeHostsRecord, makeJupyterHostRecord, makeStateRecord, makeTransformsRecord } from "@nteract/core";
 import { Media } from "@nteract/outputs";
 import Immutable, { Record } from "immutable";
 
@@ -8,7 +8,15 @@ const kernelspecsRef = createKernelspecsRef();
 
 export const initialState = Record<AppState>({
     app: makeAppRecord({
-        version: "@nteract/web"
+        version: "@nteract/web",
+        host: makeJupyterHostRecord({
+            type: "jupyter",
+            origin: 'localhost',
+            basePath: 'http://localhost:8888',
+            bookstoreEnabled: true,
+            showHeaderEditor: true,
+            crossDomain: true,
+        })
     }),
     core: makeStateRecord({
         currentKernelspecsRef: kernelspecsRef,
@@ -46,8 +54,7 @@ export const initialState = Record<AppState>({
                 }),
             })
         }),
-    }),
-
+    })
 })();
 
 

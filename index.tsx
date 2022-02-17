@@ -25,20 +25,21 @@ import "@nteract/styles/command-palette.css";
 // Needs to be last
 import "@nteract/styles/editor-overrides.css";
 import { actions } from '@nteract/core';
+import store from './src/modules/store';
 
 // const epics = combineEpics([...coreEpics.allEpics, coreEpics.launchKernelWhenNotebookSetEpic])
 
 // const epicMiddleware = createEpicMiddleware({ dependencies: contents.JupyterContentProvider });
 // epicMiddleware.run(epics)
-const stores = createStore(reducer, initialState);
+// const stores = createStore(reducer, initialState);
 
-const hostRef = createHostRef();
-const kernelspecsRef = createKernelspecsRef();
+// const hostRef = createHostRef();
+// const kernelspecsRef = createKernelspecsRef();
 
-stores.dispatch(actions.fetchKernelspecs({ hostRef, kernelspecsRef}))
+// stores.dispatch(actions.fetchKernelspecs({ hostRef, kernelspecsRef}))
 
 ReactDOM.render(
-    <Provider store={stores}>
+    <Provider store={store}>
         <App/>
     </Provider>
     , document.getElementById('root')

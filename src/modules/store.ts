@@ -1,4 +1,5 @@
 import { AppState, reducers, epics as coreEpics } from "@nteract/core";
+import { configuration } from "@nteract/mythic-configuration";
 import { notifications } from "@nteract/mythic-notifications";
 import { makeConfigureStore } from "@nteract/myths";
 import { compose } from "redux";
@@ -16,7 +17,7 @@ const configureStore = makeConfigureStore<AppState>()({
         app: reducers.app,
         core: reducers.core as any,
     },
-    epics: [...coreEpics.allEpics, coreEpics.launchKernelWhenNotebookSetEpic] as any,
+    epics: coreEpics.allEpics as any,
     epicDependencies: { contentProvider: contents.JupyterContentProvider },
     enhancer: composeEnhancers,
 });

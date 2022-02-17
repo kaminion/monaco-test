@@ -5,6 +5,20 @@ import { createContentRef } from "@nteract/core";
 import { connect } from "react-redux";
 import { contentRef } from "./modules/vanila";
 
+import "@nteract/styles/app.css";
+
+import "@nteract/styles/global-variables.css";
+
+import "@nteract/styles/themes/base.css";
+import "@nteract/styles/themes/default.css";
+import "@nteract/styles/toggle-switch.css";
+
+import "@nteract/styles/toolbar.css";
+
+import "@nteract/styles/command-palette.css";
+
+// Needs to be last
+import "@nteract/styles/editor-overrides.css";
 
 export const App = () => (
     <>
@@ -12,4 +26,4 @@ export const App = () => (
     </>
 );
 
-export default connect()(App);
+export default App;
