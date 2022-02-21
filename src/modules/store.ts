@@ -7,21 +7,22 @@ import { contents } from "rx-jupyter";
 import initialState from "./state";
 
 const composeEnhancers = 
-    typeof window !== "undefined"   
+    typeof window !== undefined   
         ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         : compose
 
 const configureStore = makeConfigureStore<AppState>()({
-    packages: [notifications],
+    packages: [configuration, notifications],
     reducers: {
         app: reducers.app,
         core: reducers.core as any,
     },
-    epics: coreEpics.allEpics as any,
+    epics: [...coreEpics.allEpics, coreEpics.launchKernelWhenNotebookSetEpic] as any,
     epicDependencies: { contentProvider: contents.JupyterContentProvider },
-    enhancer: composeEnhancers,
+    enhancer: composeEnhancers
 });
 
 const store = configureStore(initialState);
+(window as any).store = store;
 
 export default store;

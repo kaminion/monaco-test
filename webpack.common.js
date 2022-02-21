@@ -17,18 +17,7 @@ module.exports = {
         filename: "bundles.[name].[chunkhash].js",
         chunkFilename: "chunks.[name].js",
     },
-    // optimization: {
-    //     splitChunks: {
-    //         cacheGroups: {
-    //             node_vendors: {
-    //                 test: /[\\/]node_modules[\\/]/,
-    //                 chunks: "all",
-    //                 priority: 1,
-    //                 reuseExistingChunk: true
-    //             }
-    //         }
-    //     },
-    // },
+    externals: ["canvas"],
     module: {
         rules: [
             {
@@ -40,6 +29,9 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
+                    options: {
+                        sourceMap: true
+                    }
                 },
             },
             {
@@ -84,7 +76,8 @@ module.exports = {
             react: path.resolve('./node_modules/react'),
             "react-dom": path.resolve('./node_modules/react-dom'),
             redux: path.resolve('./node_modules/redux'),
-            "react-redux": path.resolve('./node_modules/react-redux')
+            "react-redux": path.resolve('./node_modules/react-redux'),
+            styles: path.resolve('./public/styles')
 
         },
         extensions: [".tsx", ".ts", ".js", ".jsx"],
@@ -95,7 +88,8 @@ module.exports = {
             querystring: require.resolve("querystring-es3"),
             stream: require.resolve("stream-browserify"),
             os: require.resolve("os-browserify/browser"),
-            fs: false
+            fs: false,
+            util: false
         },
     },
     plugins: [
@@ -108,7 +102,9 @@ module.exports = {
         new webpack.ProvidePlugin({
             process: "process/browser",
         }),
-        // new MonacoWebpackPlugin(),
+        new MonacoWebpackPlugin({
+            languages:["python"]
+        }),
         new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
         new LoadashModuleReplacementPlugin(),
         new ReactRefreshPlugin()
@@ -117,7 +113,7 @@ module.exports = {
     devServer: {
         static: { directory: path.resolve(__dirname, "./dist"), publicPath: path.resolve(__dirname, "dist") },
         hot: true,
-        host: "localhost",
+        host: "127.0.0.1",
         port: "10600",
         open: true,
     },
