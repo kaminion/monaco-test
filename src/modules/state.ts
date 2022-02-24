@@ -1,5 +1,5 @@
 import { makeNotebookRecord } from "@nteract/commutable";
-import { actions, AppState, ContentRecord, ContentRef, createContentRef, createHostRef, createKernelRef, createKernelspecsRef, EditorsRecord, HostRecord, makeAppRecord, makeCommsRecord, makeContentsRecord, makeDocumentRecord, makeDummyContentRecord, makeEditorsRecord, makeEntitiesRecord, makeHostsRecord, makeJupyterHostRecord, makeLocalHostRecord, makeNotebookContentRecord, makeStateRecord, makeTransformsRecord } from "@nteract/core";
+import { actions, AppState, ContentRecord, ContentRef, createContentRef, createHostRef, createKernelRef, createKernelspecsRef, DocumentRecordProps, EditorsRecord, HostRecord, makeAppRecord, makeCommsRecord, makeContentsRecord, makeDocumentRecord, makeDummyContentRecord, makeEditorsRecord, makeEntitiesRecord, makeHostsRecord, makeJupyterHostRecord, makeLocalHostRecord, makeNotebookContentRecord, makeStateRecord, makeTransformsRecord } from "@nteract/core";
 import { Media } from "@nteract/outputs";
 import { notebook } from "@nteract/reducers/lib/core/entities/contents/notebook";
 import Immutable, { Record } from "immutable";
@@ -35,7 +35,14 @@ export const initialRefs = Immutable.Map<ContentRef, ContentRecord>().set(
     })
 );
 
-export const initialState: AppState = {
+
+export interface NotebookState {
+    notebook: Immutable.RecordOf<DocumentRecordProps>
+}
+
+export type CustomState = NotebookState & AppState;
+
+export const initialState: CustomState = {
     app: makeAppRecord({
         version: "@nteract/web",    
         host: JupyterHostRecord
@@ -108,6 +115,9 @@ export const initialState: AppState = {
                 }),
             })
         }),
+    }),
+    notebook: makeDocumentRecord({
+
     })
 };
 

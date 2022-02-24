@@ -5,7 +5,7 @@ import { makeConfigureStore } from "@nteract/myths";
 import { combineReducers, compose } from "redux";
 import { contents } from "rx-jupyter";
 import { LocalContentProvider } from "./local-content-provider";
-import initialState from "./state";
+import initialState, { CustomState } from "./state";
 
 import { notebook } from '@nteract/reducers/lib/core/entities/contents/notebook';
 
@@ -17,11 +17,12 @@ const composeEnhancers =
         ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         : compose
 
-const configureStore = makeConfigureStore<AppState>()({
+const configureStore = makeConfigureStore<CustomState>()({
     packages: [configuration, notifications],
     reducers: {
         app,
         core: core as any,
+        notebook
     },
     epics: [...coreEpics.allEpics] as any,
     epicDependencies: { contentProvider: contents.JupyterContentProvider },

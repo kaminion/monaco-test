@@ -63,15 +63,7 @@ import { toJS } from '@nteract/commutable';
                 kernelSpecName: "python",
                 cwd: "/",
                 selectNextKernel: true
-            })),
-        store.dispatch(
-          actions.createCellBelow({ cellType: "code", source: "", contentRef })
-        ),
-        store.dispatch(actions.unhideAll({
-            contentRef,
-            inputHidden: true,
-            outputHidden: false,
-        }))
+            }))
     ]);
 })()
 
