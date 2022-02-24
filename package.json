@@ -47,16 +47,20 @@
     "@babel/runtime": "^7.17.0",
     "@babel/runtime-corejs3": "^7.17.0",
     "@nteract/commutable": "^7.4.6",
+    "@nteract/connected-components": "^6.9.0",
     "@nteract/core": "^15.1.9",
     "@nteract/data-explorer": "^8.2.12",
+    "@nteract/directory-listing": "^2.1.0",
     "@nteract/editor": "^10.1.12",
     "@nteract/jupyter-widgets": "^4.1.19",
+    "@nteract/logos": "^1.0.0",
     "@nteract/monaco-editor": "^3.5.3",
     "@nteract/mythic-configuration": "^1.0.11",
     "@nteract/mythic-notifications": "^0.2.11",
     "@nteract/myths": "^0.2.13",
     "@nteract/notebook-app-component": "^7.7.11",
     "@nteract/outputs": "^3.0.9",
+    "@nteract/reducers": "^5.1.10",
     "@nteract/stateful-components": "^1.7.14",
     "@nteract/styles": "^2.2.11",
     "@nteract/transform-model-debug": "^5.0.1",
@@ -80,6 +84,8 @@
     "rx-jupyter": "^5.5.10",
     "rxjs": "^6.6.0",
     "stream-browserify": "^3.0.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "url-join": "^4.0.1",
+    "util": "^0.12.4"
   }
 }

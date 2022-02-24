@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './src/App';
-import {createKernelRef, state} from "@nteract/core";
 import { actions } from '@nteract/core';
 import store from './src/modules/store';
 import { contentRef, hostRef, initialRefs, kernelRef, kernelspecsRef } from './src/modules/state';
@@ -24,35 +23,64 @@ import "@nteract/styles/toolbar.css";
 import "@nteract/styles/toggle-switch.css";
 import "styles/cell-menu.css";
 import "styles/sidebar.css";
+import "@nteract/styles/command-palette.css";
+import { toJS } from '@nteract/commutable';
 
 
-
-store.dispatch(
-    actions.fetchKernelspecs({ hostRef, kernelspecsRef })
-);
 
 // store.dispatch(
-//     actions.fetchContent({
+//     actions.fetchContentFulfilled({
 //         filepath: "/",
-//         params:{},
+//         model: {},
 //         kernelRef,
 //         contentRef
 //     })
 // );
-    
-store.dispatch(
-    actions.fetchContentFulfilled({
-        filepath: "/",
-        model:[],
-        kernelRef,
-        contentRef
-    })
-);
 
+
+
+
+
+// store.dispatch(
+//     actions.fetchContent({
+//         filepath: "/",
+//         params: {},
+//         contentRef,
+//         kernelRef
+//     })
+// );
+
+
+
+(async () => {
+    
+    await Promise.all([
+        store.dispatch(actions.fetchKernelspecs({ hostRef, kernelspecsRef })),
+        store.dispatch(
+            actions.launchKernelByName({
+                contentRef,
+                kernelRef,
+                kernelSpecName: "python",
+                cwd: "/",
+                selectNextKernel: true
+            })),
+        store.dispatch(
+          actions.createCellBelow({ cellType: "code", source: "", contentRef })
+        ),
+        store.dispatch(actions.unhideAll({
+            contentRef,
+            inputHidden: true,
+            outputHidden: false,
+        }))
+    ]);
+})()
+
+
+console.log(contentRef);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <App contentRef={contentRef}/>
     </Provider>
     , document.getElementById('root')
 )

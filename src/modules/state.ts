@@ -1,7 +1,6 @@
-import { AppState, ContentRecord, ContentRef, createContentRef, createHostRef, createKernelRef, createKernelspecsRef, HostRecord, makeAppRecord, makeCommsRecord, makeContentsRecord, makeDummyContentRecord, makeEntitiesRecord, makeHostsRecord, makeJupyterHostRecord, makeNotebookContentRecord, makeStateRecord, makeTransformsRecord } from "@nteract/core";
+import { AppState, ContentRecord, ContentRef, createContentRef, createHostRef, createKernelRef, createKernelspecsRef, EditorsRecord, HostRecord, makeAppRecord, makeCommsRecord, makeContentsRecord, makeDummyContentRecord, makeEditorsRecord, makeEntitiesRecord, makeHostsRecord, makeJupyterHostRecord, makeLocalHostRecord, makeNotebookContentRecord, makeStateRecord, makeTransformsRecord } from "@nteract/core";
 import { Media } from "@nteract/outputs";
 import Immutable, { Record } from "immutable";
-
 
 export const hostRef = createHostRef();
 export const contentRef = createContentRef();
@@ -10,27 +9,33 @@ export const kernelRef = createKernelRef();
 
 const NullTransform = () => null;
 
-// id를 제외한 null 값들은 채워줄 것
+// id를 제외한 null 값들은 채워줄 것 (makeJupyterHostRecord)
 const JupyterHostRecord = makeJupyterHostRecord({
     id: null,
     type: "jupyter",
     defaultKernelName: "python",
-    token: "932854b42351cbe8b7c9e0afb3b227ebc6b23dc2503f6637",
     origin: 'http://127.0.0.1:8888',
     basePath: '/',
     crossDomain: true,
     bookstoreEnabled: true,
-    showHeaderEditor: true
-})
+    showHeaderEditor: true,
+    ajaxOptions: {
+        withCredentials: true,
+        password: "robot1765"
+    }
+});
+
 
 export const initialRefs = Immutable.Map<ContentRef, ContentRecord>().set(
     contentRef,
-    makeNotebookContentRecord()
+    makeNotebookContentRecord({
+        filepath:"/"
+    })
 )
 
 export const initialState: AppState = {
     app: makeAppRecord({
-        version: "@nteract/web",
+        version: "@nteract/web",    
         host: JupyterHostRecord
     }),
     core: makeStateRecord({
@@ -104,5 +109,6 @@ export const initialState: AppState = {
     })
 };
 
+console.log(initialState);
 
 export default initialState;

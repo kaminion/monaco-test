@@ -1,30 +1,29 @@
-import React, { Fragment } from "react";
+import React, { FC } from "react";
 
+import { ContentRef } from "@nteract/core";
+
+import Notebook from "./components/notebook";
+import {default as JupyterNotebook} from "./notebook/jupyter-notebook";
 import NotebookApp from "@nteract/notebook-app-component";
-import { createContentRef } from "@nteract/core";
-import { connect } from "react-redux";
 
-import "@nteract/styles/app.css";
+interface Props {
+    contentRef: ContentRef;
+}
 
-import "@nteract/styles/global-variables.css";
-
-import "@nteract/styles/themes/base.css";
-import "@nteract/styles/themes/default.css";
-import "@nteract/styles/toggle-switch.css";
-
-import "@nteract/styles/toolbar.css";
-
-import "@nteract/styles/command-palette.css";
-
-// Needs to be last
-import "@nteract/styles/editor-overrides.css";
-import { contentRef } from "./modules/state";
-import Notebook from "./component/notebook";
-
-export const App = () => (
-    <>
-        <Notebook contentRef={contentRef}/>
-    </>
-);
+export const App: FC<Props> = ({ contentRef }: Props) => {
+    console.log(contentRef);
+    return (
+        <>
+            {/* <JupyterNotebook loading={true} showHeaderEditor={true}
+                saving={true}
+                handlers={{}}
+                onHeaderEditorChange={()=>{}}
+                lastSavedStatement="none"
+                appBase="/" baseDir="/" filepath="/" displayName="python" contentType="dummy"
+                contentRef={contentRef} /> */}
+            <button></button>
+            <Notebook contentRef={contentRef}/>
+        </>);
+}
 
 export default App;

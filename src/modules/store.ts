@@ -2,9 +2,15 @@ import { AppState, reducers, epics as coreEpics } from "@nteract/core";
 import { configuration } from "@nteract/mythic-configuration";
 import { notifications } from "@nteract/mythic-notifications";
 import { makeConfigureStore } from "@nteract/myths";
-import { compose } from "redux";
+import { combineReducers, compose } from "redux";
 import { contents } from "rx-jupyter";
+import { LocalContentProvider } from "./local-content-provider";
 import initialState from "./state";
+
+import { notebook } from '@nteract/reducers/lib/core/entities/contents/notebook';
+
+const { app, core } = reducers;
+
 
 const composeEnhancers = 
     typeof window !== undefined   
@@ -14,10 +20,10 @@ const composeEnhancers =
 const configureStore = makeConfigureStore<AppState>()({
     packages: [configuration, notifications],
     reducers: {
-        app: reducers.app,
-        core: reducers.core as any,
+        app,
+        core: core as any,
     },
-    epics: [...coreEpics.allEpics, coreEpics.launchKernelWhenNotebookSetEpic] as any,
+    epics: [...coreEpics.allEpics] as any,
     epicDependencies: { contentProvider: contents.JupyterContentProvider },
     enhancer: composeEnhancers
 });

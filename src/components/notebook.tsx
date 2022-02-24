@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Dispatch } from 'react';
 import { actions, ContentRef } from '@nteract/core';
 
@@ -103,7 +103,7 @@ const makeMapDispatchProps = (initialDispatch: Dispatch, initialProps: InitialPr
                         component: transform
                     })
                 )
-            }
+            },
         }
     }
     return mapDispatchProps;

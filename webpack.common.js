@@ -14,7 +14,7 @@ module.exports = {
     mode: "development",
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundles.[name].[chunkhash].js",
+        filename: "app.js",
         chunkFilename: "chunks.[name].js",
     },
     externals: ["canvas"],
@@ -77,7 +77,8 @@ module.exports = {
             "react-dom": path.resolve('./node_modules/react-dom'),
             redux: path.resolve('./node_modules/redux'),
             "react-redux": path.resolve('./node_modules/react-redux'),
-            styles: path.resolve('./public/styles')
+            styles: path.resolve('./public/styles'),
+            "url-join": path.resolve('./node_modules/url-join')
 
         },
         extensions: [".tsx", ".ts", ".js", ".jsx"],
@@ -88,8 +89,8 @@ module.exports = {
             querystring: require.resolve("querystring-es3"),
             stream: require.resolve("stream-browserify"),
             os: require.resolve("os-browserify/browser"),
-            fs: false,
-            util: false
+            util: require.resolve('util/'),
+            fs:false
         },
     },
     plugins: [
@@ -111,10 +112,11 @@ module.exports = {
     ],
     target: "web",
     devServer: {
-        static: { directory: path.resolve(__dirname, "./dist"), publicPath: path.resolve(__dirname, "dist") },
+        static: { publicPath: path.resolve(__dirname, "dist") }, // 원래 publicPath: path.resolve(__dirname, "dist")
         hot: true,
         host: "127.0.0.1",
         port: "10600",
         open: true,
+        headers: { "Access-Control-Allow-Origin": "*" }
     },
 };
