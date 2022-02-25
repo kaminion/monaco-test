@@ -25,6 +25,8 @@ import "styles/cell-menu.css";
 import "styles/sidebar.css";
 import "@nteract/styles/command-palette.css";
 import { toJS } from '@nteract/commutable';
+import { notebook } from '@nteract/reducers/lib/core/entities/contents/notebook';
+import { combineReducers } from 'redux';
 
 
 
@@ -63,12 +65,28 @@ import { toJS } from '@nteract/commutable';
                 kernelSpecName: "python",
                 cwd: "/",
                 selectNextKernel: true
-            }))
+            })),
+        store.dispatch(
+            actions.fetchContent({
+                filepath: "/",
+                params: {},
+                kernelRef,
+                contentRef,
+            })
+        )
+        // store.dispatch(
+        //     actions.fetchContentFulfilled({
+        //         contentRef,
+        //         kernelRef,
+        //         filepath:"/",
+        //         model:notebook
+        //     })
+        // )
     ]);
-})()
-
+})();
 
 console.log(contentRef);
+
 
 ReactDOM.render(
     <Provider store={store}>

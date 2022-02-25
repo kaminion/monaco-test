@@ -30,19 +30,13 @@ const JupyterHostRecord = makeJupyterHostRecord({
 
 export const initialRefs = Immutable.Map<ContentRef, ContentRecord>().set(
     contentRef,
-    makeNotebookContentRecord({
-        filepath: "/"
+    makeDummyContentRecord({
+        filepath: "/",
     })
 );
 
 
-export interface NotebookState {
-    notebook: Immutable.RecordOf<DocumentRecordProps>
-}
-
-export type CustomState = NotebookState & AppState;
-
-export const initialState: CustomState = {
+export const initialState: AppState = {
     app: makeAppRecord({
         version: "@nteract/web",    
         host: JupyterHostRecord
@@ -115,9 +109,6 @@ export const initialState: CustomState = {
                 }),
             })
         }),
-    }),
-    notebook: makeDocumentRecord({
-
     })
 };
 

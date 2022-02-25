@@ -13,7 +13,7 @@ module.exports = {
     entry: "./index.tsx",
     mode: "development",
     output: {
-        path: path.resolve(__dirname, "dist"),
+        publicPath: path.resolve(__dirname, "/nteract/static/dist"),
         filename: "app.js",
         chunkFilename: "chunks.[name].js",
     },
@@ -112,11 +112,12 @@ module.exports = {
     ],
     target: "web",
     devServer: {
-        static: { publicPath: path.resolve(__dirname, "dist") }, // 원래 publicPath: path.resolve(__dirname, "dist")
+        static: { publicPath: path.resolve(__dirname, "/nteract/static/dist") }, // 원래 publicPath: path.resolve(__dirname, "dist")
         hot: true,
         host: "127.0.0.1",
         port: "10600",
         open: true,
         headers: { "Access-Control-Allow-Origin": "*" }
     },
+    devtool:"source-map"
 };

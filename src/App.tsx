@@ -8,32 +8,23 @@ import NotebookApp from "@nteract/notebook-app-component";
 import { NotebookMenu } from "@nteract/connected-components";
 import { connect } from "react-redux";
 import { notebook } from "@nteract/reducers/lib/core/entities/contents/notebook";
+import { Dispatch } from "redux";
 
-interface Props {
+interface ComponentProps {
     contentRef: ContentRef;
 }
 
-export const App: FC<Props> = ({ contentRef }: Props) => {
+
+export const App: FC<ComponentProps> = ({ contentRef }: ComponentProps) => {
     console.log(contentRef);
     return (
         <>
-            {/* <JupyterNotebook loading={true} showHeaderEditor={true}
-                saving={true}
-                handlers={{}}
-                onHeaderEditorChange={()=>{}}
-                lastSavedStatement="none"
-                appBase="/" baseDir="/" filepath="/" displayName="python" contentType="dummy"
-                contentRef={contentRef} /> */}
+            <JupyterNotebook
+                contentRef={contentRef} />
             {/* <NotebookMenu contentRef={contentRef}/> */}
-            <Notebook contentRef={contentRef} />
+            {/* <button>디스패치 버튼</button> */}
+            {/* <Notebook contentRef={contentRef} /> */}
         </>);
 }
 
-export default connect((state:AppState, props:Props) => {
-    const { contentRef } = props;
-    const model = selectors.notebookModel(state, {contentRef});
-
-    notebook(model, actions.createCellAbove({ contentRef, cellType: "code" }));
-    
-    return {model}
-}, null)(App);
+export default App;
